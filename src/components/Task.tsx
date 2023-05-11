@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { Trash, Circle, CheckCircle, ClipboardText } from "phosphor-react";
 import { Description } from "./Description";
+import { Panel } from "./Panel";
 import styles from "./Task.module.css";
 
 interface Task {
@@ -56,23 +57,10 @@ export function Task() {
         onNewDescriptionChange={newDescriptionChange}
       />
 
-      {/* Panel */}
-      <div className={styles.container}>
-        <div className={styles.panel}>
-          <div>
-            <span className={styles.tasks_created}>Tarefas criadas</span>
-            <span className={styles.amount_of_tasks}>
-              {totalTasksRegistered}
-            </span>
-          </div>
-          <div>
-            <span className={styles.completed}>Concluídas</span>
-            <span className={styles.amount_of_tasks}>
-              {totalTasksCompleted} de {totalTasksRegistered}
-            </span>
-          </div>
-        </div>
-      </div>
+      <Panel
+        totalTasksRegistered={totalTasksRegistered}
+        totalTasksCompleted={totalTasksCompleted}
+      />
 
       {/* Tasks */}
       {tasks.length === 0 && (

@@ -2,36 +2,6 @@ main {
   padding: 2rem 0;
 }
 
-.container {
-  width: 46rem;
-  margin: 4rem auto;
-  display: flex;
-}
-
-.panel {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  font-weight: 700;
-}
-
-.tasks_created {
-  color: var(--blue);
-}
-
-.completed {
-  color: var(--purple);
-}
-
-.amount_of_tasks {
-  border-radius: 0.8rem;
-  padding: 0.2rem 0.7rem;
-  margin-left: 0.5rem;
-
-  background: var(--gray-400);
-  color: var(--gray-200);
-}
-
 .container_zero_tasks {
   width: 46rem;
   margin: -1.5rem auto;
