@@ -1,11 +1,6 @@
-import { useState, ChangeEvent, FormEvent, InvalidEvent } from "react";
-import {
-  Trash,
-  Circle,
-  CheckCircle,
-  ClipboardText,
-  PlusCircle,
-} from "phosphor-react";
+import { useState, ChangeEvent, FormEvent } from "react";
+import { Trash, Circle, CheckCircle, ClipboardText } from "phosphor-react";
+import { Description } from "./Description";
 import styles from "./Task.module.css";
 
 interface Task {
@@ -18,7 +13,7 @@ export function Task() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [description, setDescription] = useState("");
 
-  function handleCreateNewTask(event: FormEvent) {
+  function createNewTask(event: FormEvent) {
     event.preventDefault();
     const newTask = {
       id: totalTasksRegistered + 1,
@@ -29,12 +24,8 @@ export function Task() {
     setDescription("");
   }
 
-  function handleNewDescriptionChange(event: ChangeEvent<HTMLInputElement>) {
+  function newDescriptionChange(event: ChangeEvent<HTMLInputElement>) {
     setDescription(event.target.value);
-  }
-
-  function handleNewDescriptionInvalid(event: InvalidEvent<HTMLInputElement>) {
-    event.target.setCustomValidity("Esse campo é obrigatório!");
   }
 
   function handleDeleteComment(taskToDelete: number) {
@@ -56,27 +47,14 @@ export function Task() {
 
   const totalTasksRegistered = tasks.length;
   const totalTasksCompleted = tasks.filter((task) => task.completed).length;
-  const isNewDescriptionEmpty = description === "";
 
   return (
     <main>
-      {/* Input */}
-      <form onSubmit={handleCreateNewTask} className={styles.content}>
-        <input
-          type="text"
-          value={description}
-          onChange={handleNewDescriptionChange}
-          onInvalid={handleNewDescriptionInvalid}
-          placeholder="Adicione uma nova tarefa"
-          required
-        />
-        <button type="submit" disabled={isNewDescriptionEmpty}>
-          Criar
-          <i>
-            <PlusCircle size={24} />
-          </i>
-        </button>
-      </form>
+      <Description
+        description={description}
+        onCreateNewTask={createNewTask}
+        onNewDescriptionChange={newDescriptionChange}
+      />
 
       {/* Panel */}
       <div className={styles.container}>
