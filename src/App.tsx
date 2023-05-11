@@ -1,11 +1,11 @@
 import { Header } from "./components/Header";
-import { Task } from "./components/Task";
+import { Panel } from "./components/Panel";
 
 export function App() {
   return (
     <>
       <Header />
-      <Task />
+      <Panel />
     </>
   );
 }

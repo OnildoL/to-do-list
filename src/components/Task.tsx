@@ -1,139 +1,67 @@
-import { useState, ChangeEvent, FormEvent } from "react";
-import { Trash, Circle, CheckCircle, ClipboardText } from "phosphor-react";
-import { Description } from "./Description";
-import { Panel } from "./Panel";
+import { Trash, Circle, CheckCircle } from "phosphor-react";
 import styles from "./Task.module.css";
 
-interface Task {
-  id: number;
-  description: string;
-  completed: boolean;
+interface TaskProps {
+  task: {
+    id: number;
+    description: string;
+    completed: boolean;
+  };
+  onDeleteComment: (taskToDelete: number) => void;
+  onMarkTaskasComplete: (taskToMarkasComplete: number) => void;
 }
 
-export function Task() {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [description, setDescription] = useState("");
-
-  function createNewTask(event: FormEvent) {
-    event.preventDefault();
-    const newTask = {
-      id: totalTasksRegistered + 1,
-      description,
-      completed: false,
-    };
-    setTasks([...tasks, newTask]);
-    setDescription("");
-  }
-
-  function newDescriptionChange(event: ChangeEvent<HTMLInputElement>) {
-    setDescription(event.target.value);
-  }
+export function Task({
+  task,
+  onDeleteComment,
+  onMarkTaskasComplete,
+}: TaskProps) {
+  const isTaskCompleted = !task.completed;
+  const setCircleStyleType = isTaskCompleted
+    ? ["bg_tasks", "content_tasks"]
+    : ["bg_tasks_completed", "content_tasks_completed"];
 
   function handleDeleteComment(taskToDelete: number) {
-    const tasksWithoutDeletedOne = tasks.filter(
-      (task) => task.id !== taskToDelete
-    );
-    setTasks(tasksWithoutDeletedOne);
+    onDeleteComment(taskToDelete);
   }
 
   function handleMarkTaskasComplete(taskToMarkasComplete: number) {
-    const taskComplete = tasks.map((task) => {
-      if (task.id === taskToMarkasComplete) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
-    setTasks(taskComplete);
+    onMarkTaskasComplete(taskToMarkasComplete);
   }
 
-  const totalTasksRegistered = tasks.length;
-  const totalTasksCompleted = tasks.filter((task) => task.completed).length;
-
   return (
-    <main>
-      <Description
-        description={description}
-        onCreateNewTask={createNewTask}
-        onNewDescriptionChange={newDescriptionChange}
-      />
-
-      <Panel
-        totalTasksRegistered={totalTasksRegistered}
-        totalTasksCompleted={totalTasksCompleted}
-      />
-
-      {/* Tasks */}
-      {tasks.length === 0 && (
-        <div className={styles.container_zero_tasks}>
-          <div className={styles.no_chores_around_here}>
+    <div className={styles.container_tasks}>
+      <div className={styles[setCircleStyleType[0]]} key={task.id}>
+        <div className={styles[setCircleStyleType[1]]}>
+          <div>
             <i>
-              <ClipboardText size={56} weight="thin" />
+              {isTaskCompleted && (
+                <Circle
+                  size={20}
+                  weight="light"
+                  onClick={() => handleMarkTaskasComplete(task.id)}
+                />
+              )}
+              {!isTaskCompleted && (
+                <CheckCircle
+                  size={20}
+                  weight="fill"
+                  onClick={() => handleMarkTaskasComplete(task.id)}
+                />
+              )}
             </i>
-            <div>
-              <strong>
-                <p>Você ainda não tem tarefas cadastradas</p>
-              </strong>
-              <p>Crie tarefas e organize seus itens a fazer</p>
-            </div>
+            {task.description}
           </div>
-        </div>
-      )}
 
-      {tasks.length >= 1 && (
-        <div className={styles.container_tasks}>
-          {tasks.map((task) => {
-            if (!task.completed) {
-              return (
-                <div className={styles.bg_tasks} key={task.id}>
-                  <div className={styles.content_tasks}>
-                    <div>
-                      <i>
-                        <Circle
-                          size={20}
-                          weight="light"
-                          onClick={() => handleMarkTaskasComplete(task.id)}
-                        />
-                      </i>
-                      {task.description}
-                    </div>
-
-                    <i className={styles.trash} title="Deletar tarefa">
-                      <Trash
-                        size={20}
-                        onClick={() => handleDeleteComment(task.id)}
-                        weight="light"
-                      />
-                    </i>
-                  </div>
-                </div>
-              );
-            }
-            return (
-              <div className={styles.bg_tasks_completed} key={task.id}>
-                <div className={styles.content_tasks_completed}>
-                  <div>
-                    <i>
-                      <CheckCircle
-                        size={20}
-                        weight="fill"
-                        onClick={() => handleMarkTaskasComplete(task.id)}
-                      />
-                    </i>
-                    {task.description}
-                  </div>
-                  <i className={styles.trash} title="Deletar tarefa">
-                    <Trash
-                      size={20}
-                      onClick={() => handleDeleteComment(task.id)}
-                      weight="light"
-                    />
-                  </i>
-                </div>
-              </div>
-            );
-          })}
+          <i className={styles.trash} title="Deletar tarefa">
+            <Trash
+              size={20}
+              onClick={() => handleDeleteComment(task.id)}
+              weight="light"
+            />
+          </i>
         </div>
-      )}
-    </main>
+      </div>
+    </div>
   );
 }
