@@ -54,8 +54,4 @@ As tecnologias utilizadas nesse projeto:
 
 ## Contato
 
-- LinkedIn: linkedin.com/in/onildo-gonçalves-4ab500219
-- Gmail: onildoscript@gmail.com
-- Instagram: @onildots
-
-![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white) ![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white) ![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white)
+[![Linkedin Badge](https://img.shields.io/badge/-Onildo%20Gonçalves-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/onildo-gonçalves-4ab500219/)](https://www.linkedin.com/in/onildo-gonçalves-4ab500219/) [![Gmail Badge](https://img.shields.io/badge/-onildoscript@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:onildoscript@gmail.com)](mailto:onildoscript@gmail.com)
